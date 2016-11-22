@@ -1,5 +1,5 @@
 {
-    "name": "Ayesh/CaseInsensitiveArray",
+    "name": "ayesh/case-insensitive-array",
     "description": "Class to store and access data in a case-insensitive fashion, while maintaining the integrity and functionality of a regular array.",
     "license": "MIT",
     "keywords": ["polyfill", "shim", "compatibility", "portable", "mbstring"],
