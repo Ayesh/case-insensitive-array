@@ -120,7 +120,7 @@ class StrictTest extends PHPUnit_Framework_TestCase {
 
     $array = new Strict($source);
 
-    self::assertEquals(5, count($array), 'Initial count() call returns same values.');
+    self::assertEquals($source_count, count($array), 'Initial count() call returns same values.');
 
     unset($array['FOo']);
     $source_count--;
@@ -142,6 +142,46 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     self::assertEquals(print_r($array->dump(), 1), '');
   }
 
+  public function testForeachIteration() {
+    $source = [
+      'Foo' => 'Foo',
+      'FOO' => 'FooBar',
+      'foo' => 'Bar',
+    ];
 
+    $array = new Strict($source);
+
+    // Check with the keys.
+    foreach ($array as $key => $value) {
+      self::assertEquals('foo', $key, 'Has overwritten the existig keys with the last key seen.');
+      self::assertEquals('Bar', $value, 'Has overwritten the existig keys with the last key and its value.');
+    }
+  }
+
+
+  public function testCustomIteration() {
+    $source = [
+      'Foo' => 'Foo',
+      'FOO' => 'FooBar',
+      'foo' => 'Bar',
+      'Nothing' => NULL,
+      'Soon to loose' => TRUE,
+    ];
+
+    $array = new Strict($source);
+    self::assertEquals('Bar', $array->current());
+    self::assertEquals('foo', $array->key());
+
+    $array->next();
+    self::assertNull($array->current());
+    self::assertEquals('Nothing', $array->key());
+
+    $array->rewind();
+    self::assertEquals('Bar', $array->current());
+    self::assertEquals('foo', $array->key());
+
+    $array->next();
+    self::assertFalse($array->valid());
+  }
 
 }
