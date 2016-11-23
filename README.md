@@ -1,6 +1,6 @@
 # Case Insensitiv Array
 
-[![Code Climate](https://codeclimate.com/github/Ayesh/case-insensitive-array/badges/gpa.svg)](https://codeclimate.com/github/Ayesh/case-insensitive-array)
+[![Code Climate](https://codeclimate.com/github/Ayesh/case-insensitive-array/badges/gpa.svg)](https://codeclimate.com/github/Ayesh/case-insensitive-array)  [![Build Status](https://travis-ci.org/Ayesh/case-insensitive-array.svg?branch=master)](https://travis-ci.org/Ayesh/case-insensitive-array)
 
 ## Synopsis
 A class implementing **ArrayAccess**, **Countable**, and **Iterator** interfaces, and allows you to set, get, count, iterate, and validate while enforcing the keys to be case insensitive. 
