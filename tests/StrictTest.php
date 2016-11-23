@@ -28,10 +28,10 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     self::assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
 
     $array['fOO'] = 'baz';
-    self::assertEquals($array['Foo'], 'baz', 'Value wasoverritten with mixed case value set.');
+    self::assertEquals('baz', $array['Foo'], 'Value wasoverritten with mixed case value set.');
 
     $array['FOO'] = 'Fred';
-    self::assertEquals($array['Foo'], 'Fred', 'Value wasoverritten with mixed case value set.');
+    self::assertEquals('Fred', $array['Foo'], 'Value wasoverritten with mixed case value set.');
   }
 
   private static function getSampleTestArray() {
@@ -52,11 +52,11 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     $array = new Strict($source);
     $array[42] = 'Foo';
 
-    self::assertEquals($array['Baz'], 'Fred', 'Array initialization with a source array, exact-key access success.');
-    self::assertEquals($array['FoO'], 'gARPly', 'Mixed case array initialization returns the same value.');
-    self::assertSame($array['QUX'], ['Test' => 'Test2'], 'Array initilization, array value matches.');
-    self::assertSame($array[234], 259394, 'Numeric key returns exact same value with same type.');
-    self::assertSame($array[42], 'Foo', 'Numeric key returns exact same value with same type.');
+    self::assertEquals('Fred', $array['Baz'], 'Array initialization with a source array, exact-key access success.');
+    self::assertEquals('gARPly', $array['FoO'], 'Mixed case array initialization returns the same value.');
+    self::assertSame(['Test' => 'Test2'], $array['QUX'], 'Array initilization, array value matches.');
+    self::assertSame(259394, $array[234], 'Numeric key returns exact same value with same type.');
+    self::assertSame('Foo', $array[42], 'Numeric key returns exact same value with same type.');
 
     $array = new Strict();
     $array['x-frame-options'] = 'DENY';
@@ -70,9 +70,9 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     $array[] = 'Bar';
     $array[] = 'Fred';
 
-    self::assertEquals($array[0], 'Foo');
-    self::assertEquals($array["1"], 'Bar');
-    self::assertEquals($array[2], 'Fred');
+    self::assertEquals('Foo', $array[0]);
+    self::assertEquals('Bar', $array["1"]);
+    self::assertEquals('Fred', $array[2]);
     self::assertNull($array[3]);
 
   }
@@ -85,7 +85,7 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     unset($array['fOO']);
 
     self::assertNull($array['fOo'], 'Mixed case value unset call properly unsets the value.');
-    self::assertSame($array['FRED'], 14343, 'Mixed case value unset call maintained the container data.');
+    self::assertSame(14343, $array['FRED'], 'Mixed case value unset call maintained the container data.');
 
     $source = [];
     $source[] = 'Zero';
@@ -95,8 +95,8 @@ class StrictTest extends PHPUnit_Framework_TestCase {
 
     $array = new Strict($source);
 
-    self::assertSame($array[0], 'Zero', 'Empty array [] operation key starts with zero.');
-    self::assertSame($array[2], 'Two');
+    self::assertSame('Zero', $array[0], 'Empty array [] operation key starts with zero.');
+    self::assertSame('Two', $array[2]);
 
     unset($array[1]);
     self::assertNull($array[1], 'Numeric key unset properly removes the value.');
@@ -141,9 +141,8 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     $array[] = rand(1, 100);
     $array[] = rand(1, 100);
     $source_count += 3;
-    self::assertEquals($source_count, count($array));
 
-    self::assertEquals(print_r($array->dump(), 1), '');
+    self::assertEquals($source_count, count($array));
   }
 
   public function testForeachIteration() {
