@@ -4,7 +4,6 @@ namespace Ayesh\CaseInsensitiveArray;
 
 class Strict implements \Iterator, \ArrayAccess, \Countable   {
   protected $container = [];
-  protected $preserve_key;
 
   protected function getHash($key) {
     return strtolower($key);
@@ -62,10 +61,9 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   public function offsetSet($offset, $value) {
     if (is_null($offset)) {
       $this->container[] = [$value, NULL];
+      return;
     }
-    else {
-      $this->container[$this->getHash($offset)] = [$value, $offset];
-    }
+    $this->container[$this->getHash($offset)] = [$value, $offset];
   }
 
   public function count() {
@@ -81,19 +79,19 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   }
 
   public function current() {
-    $value_container = current($this->container);
-    return $value_container[0];
+    $subset = current($this->container);
+    return $subset[0];
   }
 
   /**
    * @return mixed
    */
   public function key() {
-    $value_container = current($this->container);
-    if (is_null($value_container[1])) {
+    $subset = current($this->container);
+    if (is_null($subset[1])) {
       return key($this->container);
     }
-    return $value_container[1];
+    return $subset[1];
   }
 
   public function rewind() {
