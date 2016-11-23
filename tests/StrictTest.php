@@ -58,6 +58,10 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     self::assertSame($array[234], 259394, 'Numeric key returns exact same value with same type.');
     self::assertSame($array[42], 'Foo', 'Numeric key returns exact same value with same type.');
 
+    $array = new Strict();
+    $array['x-frame-options'] = 'DENY';
+    $array['X-FRAME-options'] = 'SAMEORIGIN';
+    self::assertSame('SAMEORIGIN', $array['X-Frame-Options']);
   }
 
   public function testNumericArrayAccess() {
