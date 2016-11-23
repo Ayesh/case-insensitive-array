@@ -14,6 +14,7 @@ From the example above, notice how the array values are set two times with two k
 ## Prerequisites
 
  - PHP 5.4 or later
+ 
 ## Installing
 The simplest way would be to install using [composer](https://getcomposer.org). 
 
