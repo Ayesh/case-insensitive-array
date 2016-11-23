@@ -1,0 +1,147 @@
+<?php
+
+namespace Ayesh\CaseInsensitiveArray\Test;
+
+use Ayesh\CaseInsensitiveArray\Strict;
+use PHPUnit_Framework_TestCase;
+
+class StrictTest extends PHPUnit_Framework_TestCase {
+
+  public function testEmptyArrayAccess() {
+    $array = new Strict();
+    self::assertFalse(isset($array[0]), 'Numeric key isset() should return false on an empty array.');
+    self::assertFalse(isset($array['Foo']), 'Non-numeric key isset() should return false on an empty array.');
+  }
+
+  public function testMixedCaseArrayGetValue() {
+    $array = new Strict();
+    $array['Foo'] = 'Bar';
+
+    self::assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
+    self::assertNotEmpty($array['fOo'], 'Responded to mixed case array access.');
+  }
+
+  public function testMixedCaseArraySetValue() {
+    $array = new Strict();
+    $array['Foo'] = 'Bar';
+
+    self::assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
+
+    $array['fOO'] = 'baz';
+    self::assertEquals($array['Foo'], 'baz', 'Value wasoverritten with mixed case value set.');
+
+    $array['FOO'] = 'Fred';
+    self::assertEquals($array['Foo'], 'Fred', 'Value wasoverritten with mixed case value set.');
+  }
+
+  private static function getSampleTestArray() {
+    return [
+      'Foo' => 'Bar',
+      'Baz' => 'Fred',
+      'foo' => 'corge',
+      'FOO' => 'gARPly',
+      'qux' => ['Test' => 'Test2'],
+      234 => 259394,
+      '42' => 42,
+    ];
+  }
+
+  public function testInitializationWithArray() {
+    $source = static::getSampleTestArray();
+
+    $array = new Strict($source);
+    $array[42] = 'Foo';
+
+    self::assertEquals($array['Baz'], 'Fred', 'Array initialization with a source array, exact-key access success.');
+    self::assertEquals($array['FoO'], 'gARPly', 'Mixed case array initialization returns the same value.');
+    self::assertSame($array['QUX'], ['Test' => 'Test2'], 'Array initilization, array value matches.');
+    self::assertSame($array[234], 259394, 'Numeric key returns exact same value with same type.');
+    self::assertSame($array[42], 'Foo', 'Numeric key returns exact same value with same type.');
+
+  }
+
+  public function testNumericArrayAccess() {
+    $array = new Strict();
+    $array[] = 'Foo';
+    $array[] = 'Bar';
+    $array[] = 'Fred';
+
+    self::assertEquals($array[0], 'Foo');
+    self::assertEquals($array["1"], 'Bar');
+    self::assertEquals($array[2], 'Fred');
+    self::assertNull($array[3]);
+
+  }
+
+  public function testBasicArrayUnset() {
+    $array = new Strict();
+    $array['Foo'] = 'Bar';
+    $array['FOO'] = 'Baz';
+    $array['Fred'] = 14343;
+    unset($array['fOO']);
+
+    self::assertNull($array['fOo'], 'Mixed case value unset call properly unsets the value.');
+    self::assertSame($array['FRED'], 14343, 'Mixed case value unset call maintained the container data.');
+
+    $source = [];
+    $source[] = 'Zero';
+    $source[] = 'One';
+    $source[] = 'Two';
+    $source['FOUR'] = 4;
+
+    $array = new Strict($source);
+
+    self::assertSame($array[0], 'Zero', 'Empty array [] operation key starts with zero.');
+    self::assertSame($array[2], 'Two');
+
+    unset($array[1]);
+    self::assertNull($array[1], 'Numeric key unset properly removes the value.');
+
+    self::assertSame('Two', $array[2], 'Container is not reset on an unset() call.');
+
+    self::assertSame(4, $array['four'], 'Numeric and otherwise mixed key unsets still work after unset calls.');
+
+    unset($array['FOur']);
+    self::assertNull($array['FOUR'], 'Mixed case unset calls properly remove the values case insensitively.');
+
+    $array['foUR'] = 4;
+    self::assertNotNull($array['FOUR']);
+    self::assertSame(4, $array['fouR']);
+  }
+
+  public function testCount() {
+    $source = static::getSampleTestArray();
+
+    /**
+     * Number unique case-insensitive keys in the sample array.
+     * @see self::getSampleTestArray();
+     */
+    $source_count = 5;
+
+    $array = new Strict($source);
+
+    self::assertEquals(5, count($array), 'Initial count() call returns same values.');
+
+    unset($array['FOo']);
+    $source_count--;
+    self::assertEquals($source_count, count($array));
+
+    $array['FOO'] = 'Bar';
+    $array['Foo'] = 'Bar';
+    $array['foo'] = 'Bar';
+    $array['FoO'] = 'Bar';
+    $source_count++;
+    self::assertEquals($source_count, count($array));
+
+    $array[] = rand(1, 100);
+    $array[] = rand(1, 100);
+    $array[] = rand(1, 100);
+    $source_count += 3;
+    self::assertEquals($source_count, count($array));
+
+    self::assertEquals(print_r($array->dump(), 1), '');
+  }
+
+
+
+}
