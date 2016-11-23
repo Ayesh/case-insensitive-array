@@ -102,16 +102,4 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
     return next($this->container);
   }
 
-
-
-  public function dump() {
-    $this->container;
-  }
-
-
-
-
-
-
-
 }
