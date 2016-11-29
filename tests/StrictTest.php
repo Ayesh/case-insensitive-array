@@ -150,7 +150,6 @@ class StrictTest extends PHPUnit_Framework_TestCase {
       'Foo' => 'Foo',
       'FOO' => 'FooBar',
       'foo' => 'Bar',
-      'Fred' => 'H',
     ];
 
     $array = new Strict($source);
@@ -161,6 +160,29 @@ class StrictTest extends PHPUnit_Framework_TestCase {
       self::assertEquals('Bar', $value, 'Has overwritten the existing keys with the last key and its value.');
       if ($value == 'H') {
         self::assertEquals('Fred', $key, 'Key case is preserved.');
+      }
+    }
+
+    $source = [
+      'Foo' => 'Foo',
+      'FOO' => 'FooBar',
+      'FreD' => 'Bar',
+    ];
+
+    $array = new Strict($source);
+
+    // Check with the keys.
+    foreach ($array as $key => $value) {
+      if ($value == 'Bar') {
+        self::assertEquals('FreD', $key, 'Key case is preserved.');
+      }
+    }
+
+    $source = [1, 2, 3, 4, 5];
+    $array = new Strict($source);
+    foreach ($array as $key => $value) {
+      if ($value === 5) {
+        $this->assertEquals(4, $key);
       }
     }
   }
