@@ -102,4 +102,18 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
     return next($this->container);
   }
 
+  public function __debugInfo() {
+    $return = array();
+    foreach ($this->container as $container) {
+      if (isset($container[1])) {
+        $return[$container[1]] = $container[0];
+      }
+      else {
+        $return[] = $container[0];
+      }
+    }
+
+    return $return;
+  }
+
 }

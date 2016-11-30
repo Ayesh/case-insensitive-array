@@ -213,4 +213,17 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     self::assertFalse($array->valid());
   }
 
+  public function testDebugInfo() {
+    $array = new Strict();
+    $array[] = 'One';
+    $array[2] = 'Two';
+    $array['Thuna'] = '2';
+    $array['ThuNA'] = '3';
+
+    ob_start();
+    var_dump($array);
+    $dump = ob_get_clean();
+    $this->assertContains('public $ThuNA =>', $dump, 'Checking the var_dump return value to contain the overriden header.');
+  }
+
 }
