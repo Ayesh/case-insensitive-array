@@ -1,6 +1,6 @@
 # Case Insensitive Array
 
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Code Climate](https://codeclimate.com/github/Ayesh/case-insensitive-array/badges/gpa.svg)](https://codeclimate.com/github/Ayesh/case-insensitive-array)  [![Build Status](https://travis-ci.org/Ayesh/case-insensitive-array.svg?branch=master)](https://travis-ci.org/Ayesh/case-insensitive-array)  [![codecov](https://codecov.io/gh/Ayesh/case-insensitive-array/branch/master/graph/badge.svg)](https://codecov.io/gh/Ayesh/case-insensitive-array)
+[![Latest Stable Version](https://poser.pugx.org/ayesh/case-insensitive-array/v/stable)](https://packagist.org/packages/ayesh/case-insensitive-array) [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Code Climate](https://codeclimate.com/github/Ayesh/case-insensitive-array/badges/gpa.svg)](https://codeclimate.com/github/Ayesh/case-insensitive-array)  [![Build Status](https://travis-ci.org/Ayesh/case-insensitive-array.svg?branch=master)](https://travis-ci.org/Ayesh/case-insensitive-array)  [![codecov](https://codecov.io/gh/Ayesh/case-insensitive-array/branch/master/graph/badge.svg)](https://codecov.io/gh/Ayesh/case-insensitive-array)
 
 ## Synopsis
 A class implementing **ArrayAccess**, **Countable**, and **Iterator** interfaces, and allows you to set, get, count, iterate, and validate while enforcing the keys to be case insensitive. 
