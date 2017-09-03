@@ -224,7 +224,7 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     \ob_start();
     \var_dump($array);
     $dump = \ob_get_clean();
-    $this->assertContains('public $ThuNA =>', $dump, 'Checking the var_dump return value to contain the overriden header.');
+    $this->assertContains('ThuNA =>', $dump, 'Checking the var_dump return value to contain the overriden header.');
   }
 
 }
