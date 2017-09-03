@@ -25,5 +25,10 @@
         "psr-4": {
             "Ayesh\\CaseInsensitiveArray\\Test\\": "tests"
         }
+    },
+    "scripts": {
+        "test": [
+            " phpunit --coverage-clover=coverage.xml"
+        ]
     }
 }
