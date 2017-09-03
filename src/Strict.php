@@ -6,7 +6,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   protected $container = [];
 
   protected function getHash($key) {
-    return strtolower($key);
+    return \strtolower($key);
   }
 
   /**
@@ -59,7 +59,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
    * @param mixed $value
    */
   public function offsetSet($offset, $value) {
-    if (is_null($offset)) {
+    if (NULL === $offset) {
       $this->container[] = [$value, NULL];
       return;
     }
@@ -67,7 +67,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   }
 
   public function count() {
-    return count($this->container);
+    return \count($this->container);
   }
 
 
@@ -79,7 +79,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   }
 
   public function current() {
-    $subset = current($this->container);
+    $subset = \current($this->container);
     return $subset[0];
   }
 
@@ -87,19 +87,19 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
    * @return mixed
    */
   public function key() {
-    $subset = current($this->container);
-    if (is_null($subset[1])) {
+    $subset = \current($this->container);
+    if (NULL === $subset[1]) {
       return key($this->container);
     }
     return $subset[1];
   }
 
   public function rewind() {
-    return reset($this->container);
+    return \reset($this->container);
   }
 
   public function next() {
-    return next($this->container);
+    return \next($this->container);
   }
 
   public function __debugInfo() {
