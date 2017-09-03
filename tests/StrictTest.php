@@ -71,7 +71,7 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     $array[] = 'Fred';
 
     self::assertEquals('Foo', $array[0]);
-    self::assertEquals('Bar', $array["1"]);
+    self::assertEquals('Bar', $array['1']);
     self::assertEquals('Fred', $array[2]);
     self::assertNull($array[3]);
 
@@ -124,25 +124,25 @@ class StrictTest extends PHPUnit_Framework_TestCase {
 
     $array = new Strict($source);
 
-    self::assertEquals($source_count, count($array), 'Initial count() call returns same values.');
+    self::assertCount($source_count, $array, 'Initial count() call returns same values.');
 
     unset($array['FOo']);
     $source_count--;
-    self::assertEquals($source_count, count($array));
+    self::assertCount($source_count, $array);
 
     $array['FOO'] = 'Bar';
     $array['Foo'] = 'Bar';
     $array['foo'] = 'Bar';
     $array['FoO'] = 'Bar';
     $source_count++;
-    self::assertEquals($source_count, count($array));
+    self::assertCount($source_count, $array);
 
-    $array[] = rand(1, 100);
-    $array[] = rand(1, 100);
-    $array[] = rand(1, 100);
+    $array[] = \rand(1, 100);
+    $array[] = \rand(1, 100);
+    $array[] = \rand(1, 100);
     $source_count += 3;
 
-    self::assertEquals($source_count, count($array));
+    self::assertCount($source_count, $array);
   }
 
   public function testForeachIteration() {
@@ -158,7 +158,7 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     foreach ($array as $key => $value) {
       self::assertEquals('foo', $key, 'Has overwritten the existing keys with the last key seen.');
       self::assertEquals('Bar', $value, 'Has overwritten the existing keys with the last key and its value.');
-      if ($value == 'H') {
+      if ($value === 'H') {
         self::assertEquals('Fred', $key, 'Key case is preserved.');
       }
     }
@@ -173,7 +173,7 @@ class StrictTest extends PHPUnit_Framework_TestCase {
 
     // Check with the keys.
     foreach ($array as $key => $value) {
-      if ($value == 'Bar') {
+      if ($value === 'Bar') {
         self::assertEquals('FreD', $key, 'Key case is preserved.');
       }
     }
@@ -217,12 +217,13 @@ class StrictTest extends PHPUnit_Framework_TestCase {
     $array = new Strict();
     $array[] = 'One';
     $array[2] = 'Two';
+    /** @noinspection SpellCheckingInspection */
     $array['Thuna'] = '2';
     $array['ThuNA'] = '3';
 
-    ob_start();
-    var_dump($array);
-    $dump = ob_get_clean();
+    \ob_start();
+    \var_dump($array);
+    $dump = \ob_get_clean();
     $this->assertContains('public $ThuNA =>', $dump, 'Checking the var_dump return value to contain the overriden header.');
   }
 
