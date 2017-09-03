@@ -75,7 +75,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
 
   public function valid() {
     $key = $this->key();
-    return isset($this->container[$key][0]);
+    return isset($this->container[$this->getHash($key)][0]);
   }
 
   public function current() {
