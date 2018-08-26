@@ -3,8 +3,9 @@
 namespace Ayesh\CaseInsensitiveArray\Test;
 
 use Ayesh\CaseInsensitiveArray\Strict;
+use PHPUnit\Framework\TestCase;
 
-class StrictTest_Issue_1 extends \PHPUnit_Framework_TestCase {
+class StrictTest_Issue_1 extends TestCase {
   public function testMixCasedItemsNotSkipped() {
     $container  = new Strict();
     $container['foo'] = 'Foo';

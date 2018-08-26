@@ -3,9 +3,9 @@
 namespace Ayesh\CaseInsensitiveArray\Test;
 
 use Ayesh\CaseInsensitiveArray\Strict;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class StrictTest extends PHPUnit_Framework_TestCase {
+class StrictTest extends TestCase {
 
   public function testEmptyArrayAccess() {
     $array = new Strict();
