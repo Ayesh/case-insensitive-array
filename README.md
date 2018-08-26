@@ -18,9 +18,8 @@ From the example above, notice how the array values are set two times with two k
 
 ## Prerequisites
 
- - PHP 5.6 or later
- 
-The PHP 5.6 dependency is because the PHPUnit framework requires PHP 5.6. Without PHPUnit, it is technically possible to use this class with PHP 5.4 or later. However, please do note that they are _very_ old PHP versions, and you should _never_ use those versions anymore. 
+ - PHP 7.2 or later. For older PHP versions, use please use the `1.0.x` versions.
+
 ## Installing
 The simplest way would be to install using [composer](https://getcomposer.org). 
 
