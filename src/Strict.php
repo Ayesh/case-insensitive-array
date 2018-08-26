@@ -12,7 +12,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   /**
    * Hash the initial array, and store in the container.
    *
-   * @param mixed[mixed] Optional, an array to start with.
+   * @param array $array Optional, an array to start with.
    */
   public function __construct(array $array = []) {
     $this->container = [];
