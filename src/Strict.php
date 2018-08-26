@@ -26,7 +26,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
    * @param mixed $offset
    * @return bool
    */
-  public function offsetExists($offset) {
+  public function offsetExists($offset): bool {
     return isset($this->container[ $this->getHash($offset) ]);
   }
 
