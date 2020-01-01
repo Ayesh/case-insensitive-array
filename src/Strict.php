@@ -88,7 +88,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
    */
   public function key() {
     $subset = \current($this->container);
-    if (NULL === $subset[1]) {
+    if (!isset($subset[1])) {
       return key($this->container);
     }
     return $subset[1];
