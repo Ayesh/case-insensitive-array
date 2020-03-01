@@ -9,29 +9,29 @@ class StrictTest extends TestCase {
 
   public function testEmptyArrayAccess() {
     $array = new Strict();
-    self::assertFalse(isset($array[0]), 'Numeric key isset() should return false on an empty array.');
-    self::assertFalse(isset($array['Foo']), 'Non-numeric key isset() should return false on an empty array.');
+    $this->assertFalse(isset($array[0]), 'Numeric key isset() should return false on an empty array.');
+    $this->assertFalse(isset($array['Foo']), 'Non-numeric key isset() should return false on an empty array.');
   }
 
   public function testMixedCaseArrayGetValue() {
     $array = new Strict();
     $array['Foo'] = 'Bar';
 
-    self::assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
-    self::assertNotEmpty($array['fOo'], 'Responded to mixed case array access.');
+    $this->assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
+    $this->assertNotEmpty($array['fOo'], 'Responded to mixed case array access.');
   }
 
   public function testMixedCaseArraySetValue() {
     $array = new Strict();
     $array['Foo'] = 'Bar';
 
-    self::assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
+    $this->assertNotEmpty($array['Foo'], 'Responded to the exact same key used to set the value.');
 
     $array['fOO'] = 'baz';
-    self::assertEquals('baz', $array['Foo'], 'Value was overwritten with mixed case value set.');
+    $this->assertEquals('baz', $array['Foo'], 'Value was overwritten with mixed case value set.');
 
     $array['FOO'] = 'Fred';
-    self::assertEquals('Fred', $array['Foo'], 'Value was overwritten with mixed case value set.');
+    $this->assertEquals('Fred', $array['Foo'], 'Value was overwritten with mixed case value set.');
   }
 
   private static function getSampleTestArray() {
@@ -52,16 +52,16 @@ class StrictTest extends TestCase {
     $array = new Strict($source);
     $array[42] = 'Foo';
 
-    self::assertEquals('Fred', $array['Baz'], 'Array initialization with a source array, exact-key access success.');
-    self::assertEquals('gARPly', $array['FoO'], 'Mixed case array initialization returns the same value.');
-    self::assertSame(['Test' => 'Test2'], $array['QUX'], 'Array instantiate, array value matches.');
-    self::assertSame(259394, $array[234], 'Numeric key returns exact same value with same type.');
-    self::assertSame('Foo', $array[42], 'Numeric key returns exact same value with same type.');
+    $this->assertEquals('Fred', $array['Baz'], 'Array initialization with a source array, exact-key access success.');
+    $this->assertEquals('gARPly', $array['FoO'], 'Mixed case array initialization returns the same value.');
+    $this->assertSame(['Test' => 'Test2'], $array['QUX'], 'Array instantiate, array value matches.');
+    $this->assertSame(259394, $array[234], 'Numeric key returns exact same value with same type.');
+    $this->assertSame('Foo', $array[42], 'Numeric key returns exact same value with same type.');
 
     $array = new Strict();
     $array['x-frame-options'] = 'DENY';
     $array['X-FRAME-options'] = 'SAMEORIGIN';
-    self::assertSame('SAMEORIGIN', $array['X-Frame-Options']);
+    $this->assertSame('SAMEORIGIN', $array['X-Frame-Options']);
   }
 
   public function testNumericArrayAccess() {
@@ -70,10 +70,10 @@ class StrictTest extends TestCase {
     $array[] = 'Bar';
     $array[] = 'Fred';
 
-    self::assertEquals('Foo', $array[0]);
-    self::assertEquals('Bar', $array['1']);
-    self::assertEquals('Fred', $array[2]);
-    self::assertNull($array[3]);
+    $this->assertEquals('Foo', $array[0]);
+    $this->assertEquals('Bar', $array['1']);
+    $this->assertEquals('Fred', $array[2]);
+    $this->assertNull($array[3]);
 
   }
 
@@ -84,8 +84,8 @@ class StrictTest extends TestCase {
     $array['Fred'] = 14343;
     unset($array['fOO']);
 
-    self::assertNull($array['fOo'], 'Mixed case value unset call properly unset the value.');
-    self::assertSame(14343, $array['FRED'], 'Mixed case value unset call maintained the container data.');
+    $this->assertNull($array['fOo'], 'Mixed case value unset call properly unset the value.');
+    $this->assertSame(14343, $array['FRED'], 'Mixed case value unset call maintained the container data.');
 
     $source = [];
     $source[] = 'Zero';
@@ -95,22 +95,22 @@ class StrictTest extends TestCase {
 
     $array = new Strict($source);
 
-    self::assertSame('Zero', $array[0], 'Empty array [] operation key starts with zero.');
-    self::assertSame('Two', $array[2]);
+    $this->assertSame('Zero', $array[0], 'Empty array [] operation key starts with zero.');
+    $this->assertSame('Two', $array[2]);
 
     unset($array[1]);
-    self::assertNull($array[1], 'Numeric key unset properly removes the value.');
+    $this->assertNull($array[1], 'Numeric key unset properly removes the value.');
 
-    self::assertSame('Two', $array[2], 'Container is not reset on an unset() call.');
+    $this->assertSame('Two', $array[2], 'Container is not reset on an unset() call.');
 
-    self::assertSame(4, $array['four'], 'Numeric and otherwise mixed key unset still work after unset calls.');
+    $this->assertSame(4, $array['four'], 'Numeric and otherwise mixed key unset still work after unset calls.');
 
     unset($array['FOur']);
-    self::assertNull($array['FOUR'], 'Mixed case unset calls properly remove the values case insensitively.');
+    $this->assertNull($array['FOUR'], 'Mixed case unset calls properly remove the values case insensitively.');
 
     $array['foUR'] = 4;
-    self::assertNotNull($array['FOUR']);
-    self::assertSame(4, $array['fouR']);
+    $this->assertNotNull($array['FOUR']);
+    $this->assertSame(4, $array['fouR']);
   }
 
   public function testCount() {
@@ -118,31 +118,31 @@ class StrictTest extends TestCase {
 
     /**
      * Number unique case-insensitive keys in the sample array.
-     * @see self::getSampleTestArray();
+     * @see $this->getSampleTestArray();
      */
     $source_count = 5;
 
     $array = new Strict($source);
 
-    self::assertCount($source_count, $array, 'Initial count() call returns same values.');
+    $this->assertCount($source_count, $array, 'Initial count() call returns same values.');
 
     unset($array['FOo']);
     $source_count--;
-    self::assertCount($source_count, $array);
+    $this->assertCount($source_count, $array);
 
     $array['FOO'] = 'Bar';
     $array['Foo'] = 'Bar';
     $array['foo'] = 'Bar';
     $array['FoO'] = 'Bar';
     $source_count++;
-    self::assertCount($source_count, $array);
+    $this->assertCount($source_count, $array);
 
     $array[] = \rand(1, 100);
     $array[] = \rand(1, 100);
     $array[] = \rand(1, 100);
     $source_count += 3;
 
-    self::assertCount($source_count, $array);
+    $this->assertCount($source_count, $array);
   }
 
   public function testForeachIteration() {
@@ -156,10 +156,10 @@ class StrictTest extends TestCase {
 
     // Check with the keys.
     foreach ($array as $key => $value) {
-      self::assertEquals('foo', $key, 'Has overwritten the existing keys with the last key seen.');
-      self::assertEquals('Bar', $value, 'Has overwritten the existing keys with the last key and its value.');
+      $this->assertEquals('foo', $key, 'Has overwritten the existing keys with the last key seen.');
+      $this->assertEquals('Bar', $value, 'Has overwritten the existing keys with the last key and its value.');
       if ($value === 'H') {
-        self::assertEquals('Fred', $key, 'Key case is preserved.');
+        $this->assertEquals('Fred', $key, 'Key case is preserved.');
       }
     }
 
@@ -174,7 +174,7 @@ class StrictTest extends TestCase {
     // Check with the keys.
     foreach ($array as $key => $value) {
       if ($value === 'Bar') {
-        self::assertEquals('FreD', $key, 'Key case is preserved.');
+        $this->assertEquals('FreD', $key, 'Key case is preserved.');
       }
     }
 
@@ -198,19 +198,19 @@ class StrictTest extends TestCase {
     ];
 
     $array = new Strict($source);
-    self::assertEquals('Bar', $array->current());
-    self::assertEquals('foo', $array->key());
+    $this->assertEquals('Bar', $array->current());
+    $this->assertEquals('foo', $array->key());
 
     $array->next();
-    self::assertNull($array->current());
-    self::assertEquals('Nothing', $array->key());
+    $this->assertNull($array->current());
+    $this->assertEquals('Nothing', $array->key());
 
     $array->rewind();
-    self::assertEquals('Bar', $array->current());
-    self::assertEquals('foo', $array->key());
+    $this->assertEquals('Bar', $array->current());
+    $this->assertEquals('foo', $array->key());
 
     $array->next();
-    self::assertFalse($array->valid());
+    $this->assertFalse($array->valid());
   }
 
   public function testDebugInfo() {
