@@ -18,7 +18,7 @@ From the example above, notice how the array values are set two times with two k
 
 ## Prerequisites
 
- - PHP 7.2 or later. For older PHP versions, use please use the `1.0.x` versions.
+ - PHP 7.3 or later. For older PHP versions, use please use the `1.1.x` or `1.0.x` versions.
 
 ## Installing
 The simplest way would be to install using [composer](https://getcomposer.org). 
