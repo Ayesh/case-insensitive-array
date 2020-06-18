@@ -8,7 +8,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable {
      */
   protected $container = [];
 
-  protected function getHash($key): string {
+  protected function getHash(?string $key): string {
     return \strtolower($key);
   }
 
