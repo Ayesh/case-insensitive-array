@@ -5,15 +5,19 @@ namespace Ayesh\CaseInsensitiveArray\Test;
 use Ayesh\CaseInsensitiveArray\Strict;
 use PHPUnit\Framework\TestCase;
 
+use function ob_get_clean;
+use function ob_start;
+use function var_dump;
+
 class StrictTest extends TestCase {
 
-  public function testEmptyArrayAccess() {
+  public function testEmptyArrayAccess(): void {
     $array = new Strict();
     $this->assertFalse(isset($array[0]), 'Numeric key isset() should return false on an empty array.');
     $this->assertFalse(isset($array['Foo']), 'Non-numeric key isset() should return false on an empty array.');
   }
 
-  public function testMixedCaseArrayGetValue() {
+  public function testMixedCaseArrayGetValue(): void {
     $array = new Strict();
     $array['Foo'] = 'Bar';
 
@@ -21,7 +25,7 @@ class StrictTest extends TestCase {
     $this->assertNotEmpty($array['fOo'], 'Responded to mixed case array access.');
   }
 
-  public function testMixedCaseArraySetValue() {
+  public function testMixedCaseArraySetValue(): void {
     $array = new Strict();
     $array['Foo'] = 'Bar';
 
@@ -34,7 +38,7 @@ class StrictTest extends TestCase {
     $this->assertEquals('Fred', $array['Foo'], 'Value was overwritten with mixed case value set.');
   }
 
-  private static function getSampleTestArray() {
+  private static function getSampleTestArray(): array {
     return [
       'Foo' => 'Bar',
       'Baz' => 'Fred',
@@ -46,7 +50,7 @@ class StrictTest extends TestCase {
     ];
   }
 
-  public function testInitializationWithArray() {
+  public function testInitializationWithArray(): void {
     $source = static::getSampleTestArray();
 
     $array = new Strict($source);
@@ -64,7 +68,7 @@ class StrictTest extends TestCase {
     $this->assertSame('SAMEORIGIN', $array['X-Frame-Options']);
   }
 
-  public function testNumericArrayAccess() {
+  public function testNumericArrayAccess(): void {
     $array = new Strict();
     $array[] = 'Foo';
     $array[] = 'Bar';
@@ -77,7 +81,7 @@ class StrictTest extends TestCase {
 
   }
 
-  public function testBasicArrayUnset() {
+  public function testBasicArrayUnset(): void {
     $array = new Strict();
     $array['Foo'] = 'Bar';
     $array['FOO'] = 'Baz';
@@ -113,7 +117,7 @@ class StrictTest extends TestCase {
     $this->assertSame(4, $array['fouR']);
   }
 
-  public function testCount() {
+  public function testCount(): void {
     $source = static::getSampleTestArray();
 
     /**
@@ -137,15 +141,15 @@ class StrictTest extends TestCase {
     $source_count++;
     $this->assertCount($source_count, $array);
 
-    $array[] = \rand(1, 100);
-    $array[] = \rand(1, 100);
-    $array[] = \rand(1, 100);
+    $array[] = random_int(1, 100);
+    $array[] = random_int(1, 100);
+    $array[] = random_int(1, 100);
     $source_count += 3;
 
     $this->assertCount($source_count, $array);
   }
 
-  public function testForeachIteration() {
+  public function testForeachIteration(): void {
     $source = [
       'Foo' => 'Foo',
       'FOO' => 'FooBar',
@@ -188,7 +192,7 @@ class StrictTest extends TestCase {
   }
 
 
-  public function testCustomIteration() {
+  public function testCustomIteration(): void {
     $source = [
       'Foo' => 'Foo',
       'FOO' => 'FooBar',
@@ -213,7 +217,7 @@ class StrictTest extends TestCase {
     $this->assertFalse($array->valid());
   }
 
-  public function testDebugInfo() {
+  public function testDebugInfo(): void {
     $array = new Strict();
     $array[] = 'One';
     $array[2] = 'Two';
@@ -221,10 +225,10 @@ class StrictTest extends TestCase {
     $array['Thuna'] = '2';
     $array['ThuNA'] = '3';
 
-    \ob_start();
-    \var_dump($array);
-    $dump = \ob_get_clean();
-    $this->assertStringContainsString('ThuNA', $dump, 'Checking the var_dump return value to contain the overriden header.');
+    ob_start();
+    var_dump($array);
+    $dump = ob_get_clean();
+    $this->assertStringContainsString('ThuNA', $dump, 'Checking the var_dump return value to contain the overridden header.');
   }
 
 }

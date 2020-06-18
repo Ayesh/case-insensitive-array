@@ -6,7 +6,7 @@ use Ayesh\CaseInsensitiveArray\Strict;
 use PHPUnit\Framework\TestCase;
 
 class StrictTest_Issue_1 extends TestCase {
-  public function testMixCasedItemsNotSkipped() {
+  public function testMixCasedItemsNotSkipped(): void {
     $container  = new Strict();
     $container['foo'] = 'Foo';
     $container['Foo'] = 'Foo';
