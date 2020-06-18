@@ -5,7 +5,7 @@ namespace Ayesh\CaseInsensitiveArray;
 class Strict implements \Iterator, \ArrayAccess, \Countable   {
   protected $container = [];
 
-  protected function getHash($key) {
+  protected function getHash($key): string {
     return \strtolower($key);
   }
 
@@ -22,26 +22,15 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
     }
   }
 
-  /**
-   * @param mixed $offset
-   * @return bool
-   */
   public function offsetExists($offset): bool {
     return isset($this->container[ $this->getHash($offset) ]);
   }
 
-  /**
-   * @param mixed $offset
-   */
-  public function offsetUnset($offset) {
+  public function offsetUnset($offset): void {
     $hash = $this->getHash($offset);
     unset($this->container[$hash]);
   }
 
-  /**
-   * @param mixed $offset
-   * @return mixed
-   */
   public function offsetGet($offset) {
     $hash = $this->getHash($offset);
     if (isset($this->container[$hash])) {
@@ -55,10 +44,10 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   /**
    * Store the given key and value into the container, and its hash to the
    * hashes list.
-   * @param mixed $offset
+   * @param string $offset
    * @param mixed $value
    */
-  public function offsetSet($offset, $value) {
+  public function offsetSet($offset, $value): void {
     if (NULL === $offset) {
       $this->container[] = [$value, NULL];
       return;
@@ -66,14 +55,11 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
     $this->container[$this->getHash($offset)] = [$value, $offset];
   }
 
-  public function count() {
+  public function count(): int {
     return \count($this->container);
   }
 
-
-
-
-  public function valid() {
+  public function valid(): bool {
     $key = $this->key();
     return isset($this->container[$this->getHash($key)][0]);
   }
@@ -83,13 +69,10 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
     return $subset[0];
   }
 
-  /**
-   * @return mixed
-   */
-  public function key() {
+  public function key(): ?string {
     $subset = \current($this->container);
     if (!isset($subset[1])) {
-      return key($this->container);
+      return \key($this->container);
     }
     return $subset[1];
   }
@@ -102,8 +85,8 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
     return \next($this->container);
   }
 
-  public function __debugInfo() {
-    $return = array();
+  public function __debugInfo(): array {
+    $return = [];
     foreach ($this->container as $container) {
       if (isset($container[1])) {
         $return[$container[1]] = $container[0];
