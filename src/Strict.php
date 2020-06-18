@@ -2,7 +2,10 @@
 
 namespace Ayesh\CaseInsensitiveArray;
 
-class Strict implements \Iterator, \ArrayAccess, \Countable   {
+class Strict implements \Iterator, \ArrayAccess, \Countable {
+    /**
+     * @var array
+     */
   protected $container = [];
 
   protected function getHash($key): string {
@@ -44,7 +47,7 @@ class Strict implements \Iterator, \ArrayAccess, \Countable   {
   /**
    * Store the given key and value into the container, and its hash to the
    * hashes list.
-   * @param string $offset
+   * @param string|null $offset
    * @param mixed $value
    */
   public function offsetSet($offset, $value): void {
