@@ -31,12 +31,7 @@ jobs:
           coverage: xdebug
           ini-values: assert.exception=1, zend.assertions=1
 
-      - name: Install composer dependencies ignoring platform requirements
-        if: matrix.php == '8.0'
-        run: composer install --no-interaction --prefer-dist --ignore-platform-reqs
-
       - name: Install composer dependencies
-        if: matrix.php != '8.0'
         run: composer update --no-interaction --prefer-dist
 
       - name: Run tests with phpunit
