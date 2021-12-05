@@ -13,10 +13,7 @@ use function reset;
 use function strtolower;
 
 class Strict implements Iterator, ArrayAccess, Countable {
-    /**
-     * @var array
-     */
-    protected $container = [];
+    protected array $container = [];
 
     /**
      * Hash the initial array, and store in the container.
