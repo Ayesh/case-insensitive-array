@@ -43,7 +43,7 @@ class Strict implements Iterator, ArrayAccess, Countable {
     }
 
     protected function getHash(?string $key): string {
-        return strtolower($key);
+        return strtolower($key ?? '');
     }
 
     public function offsetExists($offset): bool {
