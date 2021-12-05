@@ -55,7 +55,7 @@ class Strict implements Iterator, ArrayAccess, Countable {
         unset($this->container[$hash]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet(mixed $offset): mixed {
         $hash = $this->getHash($offset);
         if (isset($this->container[$hash])) {
             return $this->container[$hash][0];
@@ -78,17 +78,17 @@ class Strict implements Iterator, ArrayAccess, Countable {
         return $subset[1] ?? key($this->container);
     }
 
-    public function current() {
+    public function current(): mixed {
         $subset = current($this->container);
         return $subset[0];
     }
 
-    public function rewind() {
-        return reset($this->container);
+    public function rewind(): void {
+        reset($this->container);
     }
 
-    public function next() {
-        return next($this->container);
+    public function next(): void {
+        next($this->container);
     }
 
     public function __debugInfo(): array {
